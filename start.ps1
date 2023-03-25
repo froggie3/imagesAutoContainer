@@ -7,7 +7,7 @@ if ($null -eq $Path) {
     Write-Host "Intended to be used in a directory with Stable Diffusion Web UI"
 }
 elseif (Test-Path $Path) {
-    foreach ($x in $(Get-ChildItem -Path $Path -Filter "*.png") ) {
+    foreach ($x in $(Get-ChildItem -Path $Path -Include "*.png", "*.jpg" -Recurse -Depth 0)) {
         $Date = Get-ChildItem $x.FullName | Select-Object LastWriteTime | ForEach-Object { $_.LastWriteTime.ToString("yyyy-MM-dd") }
         $NewDirectory = $(Join-Path -Path $Path -ChildPath $Date) # e.g. X:/dirname/yyyy-MM-dd
         if ((Test-Path $NewDirectory) -ne $true) {
